@@ -6,9 +6,9 @@ import { Flags } from "../types/Flags";
 import channelSchema from "../models/channelSchema";
 
 const consoleColors = {
-    SUCCESS: "\u001b[32m",
-    WARNING: "\u001b[33m",
-    ERROR: "\u001b[31m"
+  SUCCESS: "\u001b[32m",
+  WARNING: "\u001b[33m",
+  ERROR: "\u001b[31m"
 };
 
 const hasAmount = ["STRING", "NUMBER"];
@@ -20,27 +20,31 @@ const channels: string[] = [];
  * @param {String} path The file path
  * @param {String} text The text to show in the console
  */
-export const log = (type: "SUCCESS" | "ERROR" | "WARNING", path: string, text: string) => {
-    console.log(
-        `\u001b[36;1m<KelleeBot>\u001b[0m\u001b[34m [${path}]\u001b[0m - ${consoleColors[type]}${text}\u001b[0m`
-    );
+export const log = (
+  type: "SUCCESS" | "ERROR" | "WARNING",
+  path: string,
+  text: string
+) => {
+  console.log(
+    `\u001b[36;1m<KelleeBot>\u001b[0m\u001b[34m [${path}]\u001b[0m - ${consoleColors[type]}${text}\u001b[0m`
+  );
 };
 
 export const updateChannelsCache = (channel: string, join = true) => {
-    if (join) channels.push(channel);
-    else {
-        const index = channels.indexOf(channel);
-        if (index > -1) channels.splice(index, 1);
-    }
+  if (join) channels.push(channel);
+  else {
+    const index = channels.indexOf(channel);
+    if (index > -1) channels.splice(index, 1);
+  }
 };
 
 export const getAllChannels = async () => {
-    if (channels.length) return channels;
-    const results = await channelSchema.find({});
-    for (const result of results) {
-        channels.push(result._id);
-    }
-    return channels;
+  if (channels.length) return channels;
+  const results = await channelSchema.find({});
+  for (const result of results) {
+    channels.push(result._id);
+  }
+  return channels;
 };
 
 /**
@@ -50,84 +54,88 @@ export const getAllChannels = async () => {
  * @param {Arguments} expectedArgs The expected arguments the command should have
  * @returns
  */
-export const processArguments = (message: string, msgArgs: string[], expectedArgs: Arguments) => {
-    let counter = 0;
-    let amount, num;
-    let flags: Flags = {};
+export const processArguments = (
+  message: string,
+  msgArgs: string[],
+  expectedArgs: Arguments
+) => {
+  let counter = 0;
+  let amount, num;
+  let flags: Flags = {};
 
-    for (const argument of expectedArgs) {
-        if (hasAmount.includes(argument.type)) {
-            amount = argument.amount && argument.amount > 1 ? argument.amount : 1;
-        } else {
-            amount = 1;
-        }
-
-        for (let i = 0; i < amount; i++) {
-            switch (argument.type) {
-                case "STRING":
-                    if (!msgArgs[counter]) {
-                        return { invalid: true, prompt: argument.prompt };
-                    }
-
-                    if (
-                        argument.words &&
-                        !argument.words.includes(msgArgs[counter].toLowerCase())
-                    ) {
-                        return { invalid: true, prompt: argument.prompt };
-                    }
-
-                    if (argument.regexp && !argument.regexp.test(msgArgs[counter])) {
-                        return { invalid: true, prompt: argument.prompt };
-                    }
-
-                    if (amount == 1) {
-                        flags[argument.id] = msgArgs[counter];
-                    } else if (flags[argument.id]) {
-                        //@ts-ignore
-                        flags[argument.id].push(msgArgs[counter]);
-                    } else {
-                        flags[argument.id] = [msgArgs[counter]];
-                    }
-                    break;
-
-                case "NUMBER":
-                    num = Number(msgArgs[counter]);
-                    if (!msgArgs[counter] || isNaN(num)) {
-                        return { invalid: true, prompt: argument.prompt };
-                    }
-
-                    if (argument.min && argument.min > num) {
-                        return { invalid: true, prompt: argument.prompt };
-                    }
-
-                    if (argument.max && argument.max < num) {
-                        return { invalid: true, prompt: argument.prompt };
-                    }
-
-                    if (argument.toInteger) {
-                        //@ts-ignore
-                        num = parseInt(num);
-                    }
-
-                    if (amount == 1) {
-                        flags[argument.id] = num;
-                    } else if (flags[argument.id]) {
-                        //@ts-ignore
-                        flags[argument.id].push(num);
-                    } else {
-                        flags[argument.id] = [num];
-                    }
-                    break;
-                default:
-                    console.warn(
-                        //@ts-ignore
-                        `processArguments: the argument type "${argument.type}" doesn't exist.`
-                    );
-            }
-            counter++;
-        }
+  for (const argument of expectedArgs) {
+    if (hasAmount.includes(argument.type)) {
+      amount = argument.amount && argument.amount > 1 ? argument.amount : 1;
+    } else {
+      amount = 1;
     }
-    return flags;
+
+    for (let i = 0; i < amount; i++) {
+      switch (argument.type) {
+        case "STRING":
+          if (!msgArgs[counter]) {
+            return { invalid: true, prompt: argument.prompt };
+          }
+
+          if (
+            argument.words &&
+            !argument.words.includes(msgArgs[counter].toLowerCase())
+          ) {
+            return { invalid: true, prompt: argument.prompt };
+          }
+
+          if (argument.regexp && !argument.regexp.test(msgArgs[counter])) {
+            return { invalid: true, prompt: argument.prompt };
+          }
+
+          if (amount == 1) {
+            flags[argument.id] = msgArgs[counter];
+          } else if (flags[argument.id]) {
+            //@ts-ignore
+            flags[argument.id].push(msgArgs[counter]);
+          } else {
+            flags[argument.id] = [msgArgs[counter]];
+          }
+          break;
+
+        case "NUMBER":
+          num = Number(msgArgs[counter]);
+          if (!msgArgs[counter] || isNaN(num)) {
+            return { invalid: true, prompt: argument.prompt };
+          }
+
+          if (argument.min && argument.min > num) {
+            return { invalid: true, prompt: argument.prompt };
+          }
+
+          if (argument.max && argument.max < num) {
+            return { invalid: true, prompt: argument.prompt };
+          }
+
+          if (argument.toInteger) {
+            //@ts-ignore
+            num = parseInt(num);
+          }
+
+          if (amount == 1) {
+            flags[argument.id] = num;
+          } else if (flags[argument.id]) {
+            //@ts-ignore
+            flags[argument.id].push(num);
+          } else {
+            flags[argument.id] = [num];
+          }
+          break;
+        default:
+          console.warn(
+            //@ts-ignore
+            `processArguments: the argument type "${argument.type}" doesn't exist.`
+          );
+      }
+      counter++;
+    }
+  }
+  return flags;
 };
 
 /**
@@ -137,17 +145,17 @@ export const processArguments = (message: string, msgArgs: string[], expectedArg
  * @returns The channel info
  */
 export const getChannelInfo = async (client: Client, channel: string) => {
-    const channelName = channel.slice(1);
-    let channelInfo = client.channelInfoCache.get(channelName);
-    if (!channelInfo) {
-        channelInfo = await client.DBChannel.findByIdAndUpdate(
-            channelName,
-            {},
-            { new: true, upsert: true, setDefaultsOnInsert: true }
-        );
-        client.channelInfoCache.set(channelName, channelInfo);
-    }
-    return channelInfo;
+  const channelName = channel.slice(1);
+  let channelInfo = client.channelInfoCache.get(channelName);
+  if (!channelInfo) {
+    channelInfo = await client.DBChannel.findByIdAndUpdate(
+      channelName,
+      {},
+      { new: true, upsert: true, setDefaultsOnInsert: true }
+    );
+    client.channelInfoCache.set(channelName, channelInfo);
+  }
+  return channelInfo;
 };
 
 /**
@@ -155,13 +163,20 @@ export const getChannelInfo = async (client: Client, channel: string) => {
  * @param {Command} command The command to get the cooldown for
  * @returns The command cooldown, in seconds or undefined if there is no cooldown
  */
-export const getCooldown = async (client: Client, command: Command, channel: string) => {
-    const channelInfo = await getChannelInfo(client, channel);
-    let cd = command.cooldown;
-    if (channelInfo.commandCooldowns && channelInfo.commandCooldowns[command.name]) {
-        cd = channelInfo.commandCooldowns[command.name][channel.slice(1)] / 1000;
-    }
-    return cd;
+export const getCooldown = async (
+  client: Client,
+  command: Command,
+  channel: string
+) => {
+  const channelInfo = await getChannelInfo(client, channel);
+  let cd = command.cooldown;
+  if (
+    channelInfo.commandCooldowns &&
+    channelInfo.commandCooldowns[command.name]
+  ) {
+    cd = channelInfo.commandCooldowns[command.name][channel.slice(1)] / 1000;
+  }
+  return cd;
 };
 
 /**
@@ -172,39 +187,39 @@ export const getCooldown = async (client: Client, command: Command, channel: str
  * @param {Userstate} userstate The userstate object to set the cooldown for
  */
 export const setCooldown = async (
-    client: Client,
-    command: Command,
-    channel: string,
-    userstate: Userstate
+  client: Client,
+  command: Command,
+  channel: string,
+  userstate: Userstate
 ) => {
-    const cd = await getCooldown(client, command, channel);
-    if (!cd) return;
+  const cd = await getCooldown(client, command, channel);
+  if (!cd) return;
 
-    let cooldowns;
-    if (typeof command.globalCooldown === "undefined" || command.globalCooldown) {
-        if (!client.globalCooldowns.has(command.name)) {
-            client.globalCooldowns.set(command.name, new Map());
-        }
-        cooldowns = client.globalCooldowns;
-    } else {
-        if (!client.channelCooldowns.has(channel)) {
-            client.channelCooldowns.set(channel, new Map());
-            cooldowns = client.channelCooldowns.get(channel);
-        }
-        if (!client.channelCooldowns.has(channel)) {
-            client.channelCooldowns.set(channel, new Map());
-        }
-        cooldowns = client.channelCooldowns.get(channel);
-        if (!cooldowns!.has(command.name)) {
-            cooldowns!.set(command.name, new Map());
-        }
+  let cooldowns;
+  if (typeof command.globalCooldown === "undefined" || command.globalCooldown) {
+    if (!client.globalCooldowns.has(command.name)) {
+      client.globalCooldowns.set(command.name, new Map());
     }
+    cooldowns = client.globalCooldowns;
+  } else {
+    if (!client.channelCooldowns.has(channel)) {
+      client.channelCooldowns.set(channel, new Map());
+      cooldowns = client.channelCooldowns.get(channel);
+    }
+    if (!client.channelCooldowns.has(channel)) {
+      client.channelCooldowns.set(channel, new Map());
+    }
+    cooldowns = client.channelCooldowns.get(channel);
+    if (!cooldowns!.has(command.name)) {
+      cooldowns!.set(command.name, new Map());
+    }
+  }
 
-    const now = Date.now();
-    const timestamps = cooldowns!.get(command.name);
-    const cooldownAmount = cd * 1000;
-    timestamps!.set(userstate["user-id"]!, now);
-    setTimeout(() => timestamps!.delete(userstate["user-id"]!), cooldownAmount);
+  const now = Date.now();
+  const timestamps = cooldowns!.get(command.name);
+  const cooldownAmount = cd * 1000;
+  timestamps!.set(userstate["user-id"]!, now);
+  setTimeout(() => timestamps!.delete(userstate["user-id"]!), cooldownAmount);
 };
 
 /**
@@ -214,13 +229,17 @@ export const setCooldown = async (
  * @param {String} channel The channel to check
  * @returns True if the user in chat is the broadcaster; false otherwise
  */
-export const isBroadcaster = async (client: Client, user: string, channel: string) => {
-    const channelInfo = await getChannelInfo(client, channel);
-    if (!channelInfo) return false;
-    return (
-        user.toLowerCase() == channelInfo._id &&
-        user.toLowerCase() == channel.slice(1).toLowerCase()
-    );
+export const isBroadcaster = async (
+  client: Client,
+  user: string,
+  channel: string
+) => {
+  const channelInfo = await getChannelInfo(client, channel);
+  if (!channelInfo) return false;
+  return (
+    user.toLowerCase() == channelInfo._id &&
+    user.toLowerCase() == channel.slice(1).toLowerCase()
+  );
 };
 
 /**
@@ -229,49 +248,49 @@ export const isBroadcaster = async (client: Client, user: string, channel: strin
  * @returns The time string
  */
 export const msToTime = (ms: number) => {
-    let time = "";
+  let time = "";
 
-    let n = 0;
-    if (ms >= 31536000000) {
-        n = Math.floor(ms / 31536000000);
-        time = `${n}y `;
-        ms -= n * 31536000000;
-    }
+  let n = 0;
+  if (ms >= 31536000000) {
+    n = Math.floor(ms / 31536000000);
+    time = `${n}y `;
+    ms -= n * 31536000000;
+  }
 
-    if (ms >= 2592000000) {
-        n = Math.floor(ms / 2592000000);
-        time += `${n}mo `;
-        ms -= n * 2592000000;
-    }
+  if (ms >= 2592000000) {
+    n = Math.floor(ms / 2592000000);
+    time += `${n}mo `;
+    ms -= n * 2592000000;
+  }
 
-    if (ms >= 604800000) {
-        n = Math.floor(ms / 604800000);
-        time += `${n}w `;
-        ms -= n * 604800000;
-    }
+  if (ms >= 604800000) {
+    n = Math.floor(ms / 604800000);
+    time += `${n}w `;
+    ms -= n * 604800000;
+  }
 
-    if (ms >= 86400000) {
-        n = Math.floor(ms / 86400000);
-        time += `${n}d `;
-        ms -= n * 86400000;
-    }
+  if (ms >= 86400000) {
+    n = Math.floor(ms / 86400000);
+    time += `${n}d `;
+    ms -= n * 86400000;
+  }
 
-    if (ms >= 3600000) {
-        n = Math.floor(ms / 3600000);
-        time += `${n}h `;
-        ms -= n * 3600000;
-    }
+  if (ms >= 3600000) {
+    n = Math.floor(ms / 3600000);
+    time += `${n}h `;
+    ms -= n * 3600000;
+  }
 
-    if (ms >= 60000) {
-        n = Math.floor(ms / 60000);
-        time += `${n}m `;
-        ms -= n * 60000;
-    }
+  if (ms >= 60000) {
+    n = Math.floor(ms / 60000);
+    time += `${n}m `;
+    ms -= n * 60000;
+  }
 
-    n = Math.ceil(ms / 1000);
-    time += n === 0 ? "" : `${n}s`;
+  n = Math.ceil(ms / 1000);
+  time += n === 0 ? "" : `${n}s`;
 
-    return time.trimEnd();
+  return time.trimEnd();
 };
 
 /**
@@ -280,10 +299,10 @@ export const msToTime = (ms: number) => {
  * @returns The string with the special characters removed
  */
 export const replaceChars = (str: string) => {
-    return str
-        .toLowerCase()
-        .replace(/[.,\/#!$%\^&\*;:{}=\-_'""`~()]/g, "")
-        .replace(/\s{2,}/g, " ");
+  return str
+    .toLowerCase()
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_'""`~()]/g, "")
+    .replace(/\s{2,}/g, " ");
 };
 
 /**
@@ -292,20 +311,21 @@ export const replaceChars = (str: string) => {
  * @param {String} channel The channel to send the error message to
  */
 export const errorMessage = (client: Client, channel: string) => {
-    client.say(channel, "/me An error has occurred. Please try again.");
+  client.say(channel, "/me An error has occurred. Please try again.");
 };
 
 export const randomRange = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 export const isModOrVIP = async (client: Client, channel: string) => {
-    const channelName = channel.slice(1).toLowerCase();
+  const channelName = channel.slice(1).toLowerCase();
 
-    const vips = await client.vips(channelName);
-    const mods = await client.mods(channelName);
+  const vips = await client.vips(channelName);
+  const mods = await client.mods(channelName);
 
-    return (
-        vips.includes(`${process.env.BOT_USERNAME}`) || mods.includes(`${process.env.BOT_USERNAME}`)
-    );
+  return (
+    vips.includes(`${process.env.BOT_USERNAME}`) ||
+    mods.includes(`${process.env.BOT_USERNAME}`)
+  );
 };

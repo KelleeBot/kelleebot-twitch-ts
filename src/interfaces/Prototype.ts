@@ -20,12 +20,12 @@ Array.prototype.shuffle = function () {
   return this;
 };
 
-String.prototype.format = function () {
+String.prototype.format = function (...args) {
   let s = this;
-  let i = arguments.length;
+  let i = args.length;
 
   while (i--) {
-    s = s.replace(new RegExp("\\{" + i + "\\}", "gm"), arguments[i]);
+    s = s.replace(new RegExp("\\{" + i + "\\}", "gm"), args[i]);
   }
   return s.toString();
 };

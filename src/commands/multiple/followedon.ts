@@ -1,5 +1,5 @@
 import { Command } from "../../interfaces";
-import { log, replaceChars, errorMessage } from "../../utils";
+import { log, replaceChars, errorMessage, setCooldown } from "../../utils";
 import fetch from "node-fetch";
 
 export default {
@@ -8,6 +8,7 @@ export default {
   cooldown: 15,
   channels: ["jkirstyn", "ramenbomber_", "mackthevoid"],
   async execute({ client, channel, userstate }) {
+    setCooldown(client, this, channel, userstate);
     const data = (
       await fetch(
         `https://beta.decapi.me/twitch/followed/${channel.slice(1)}/${

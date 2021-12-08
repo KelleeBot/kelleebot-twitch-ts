@@ -1,6 +1,6 @@
 import { Command } from "../../interfaces";
 import fetch from "node-fetch";
-import { log, replaceChars, errorMessage } from "../../utils";
+import { log, replaceChars, errorMessage, setCooldown } from "../../utils";
 
 export default {
   name: "followage",
@@ -8,6 +8,7 @@ export default {
   cooldown: 15,
   channels: ["jkirstyn", "ramenbomber_", "mackthevoid"],
   async execute({ client, channel, userstate }) {
+    setCooldown(client, this, channel, userstate);
     const data = (
       await fetch(
         `https://beta.decapi.me/twitch/followage/${encodeURIComponent(

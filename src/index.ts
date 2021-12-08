@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Client } from "./Client";
 import { log, getAllChannels, registerCommands, registerEvents } from "./utils";
+import "./interfaces/Prototype";
 import * as dotenv from "dotenv";
 dotenv.config();
 

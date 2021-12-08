@@ -1,4 +1,5 @@
 import { Command } from "../../../interfaces";
+import { log } from "../../../utils";
 import shoutouts from "../../../config/shoutouts.json";
 import fetch from "node-fetch";
 
@@ -41,8 +42,11 @@ export default {
           userToSO.toLowerCase()
         )}`
       )
-    ).then((r: Response) => r.text());
-
+    )
+      .then((r: Response) => r.text())
+      .catch((e: Error) =>
+        log("ERROR", `${__filename}`, `An error has occurred: ${e}`)
+      );
     if (!game || typeof game === "undefined") {
       return client.say(
         channel,

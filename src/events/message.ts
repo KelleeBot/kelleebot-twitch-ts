@@ -8,6 +8,7 @@ import {
   processArguments
 } from "../utils";
 import { devs } from "../config/config.json";
+import { famous } from "../config/famous.json";
 import { Client } from "../Client";
 import { Userstate } from "tmi.js";
 
@@ -160,7 +161,7 @@ const checkTwitchChat = async (
   if (message.length > 450) {
     client
       .deletemessage(channel, userstate["id"]!)
-      .then((data) => {
+      .then(() => {
         client.say(
           channel,
           `/me ${userstate["display-name"]}, the mods here don't like reading long messages. Please try to keep it short and sweet.`
@@ -171,17 +172,13 @@ const checkTwitchChat = async (
       });
   }
 
-  if (
-    message.toLowerCase().includes("bigfollows .com") ||
-    message.toLowerCase().includes("bigfollows.com") ||
-    message.toLowerCase().includes("bigfollows . com") ||
-    message.includes(
-      "Wanna b̔ecome̤ famoͅus̈́?̿ Bu͗y f̭ollow̮ers, primes and viewers on ̫" //https://clck.ru/R9gQV ͉(bigfollows .com)̰"
-    )
-  ) {
+  const famousChecker = (value: string) =>
+    famous.some((element) => value.includes(element));
+
+  if (famousChecker(message.toLowerCase())) {
     client
       .ban(channel, userstate.username)
-      .then((data) => {
+      .then(() => {
         client.say(channel, `/me No, I don't wanna become famous. Good bye!`);
       })
       .catch((e) => {
@@ -195,7 +192,7 @@ const checkTwitchChat = async (
   ) {
     client
       .ban(channel, userstate.username)
-      .then((data) => {
+      .then(() => {
         client.say(
           channel,
           `/me No, I don't want a boost on Twitch. Get outta here!`

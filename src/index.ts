@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import tmi from "tmi.js";
 import { Client } from "./Client";
 import { log, getAllChannels, registerCommands, registerEvents } from "./utils";
 import * as dotenv from "dotenv";
@@ -34,15 +33,12 @@ dotenv.config();
       channels: ["iaraaron"]
     };
 
-    const client = new tmi.client(opts) as Client;
+    const client = new Client(opts);
     await client.connect();
 
     client.commands = new Map();
     client.categories = new Map();
     client.channelInfoCache = new Map();
-
-    client.DBChannel = (await import("./models/channelSchema")).default;
-    client.DBUser = (await import("./models/userSchema")).default;
 
     client.channelCooldowns = new Map();
     client.globalCooldowns = new Map();

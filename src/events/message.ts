@@ -1,5 +1,6 @@
 import {
   getAllChannels,
+  getAllFamousLinks,
   getChannelInfo,
   getCooldown,
   isBroadcaster,
@@ -8,7 +9,6 @@ import {
   processArguments
 } from "../utils";
 import { devs } from "../config/config.json";
-import { famous } from "../config/famous.json";
 import { Client } from "../Client";
 import { Userstate } from "tmi.js";
 
@@ -172,8 +172,9 @@ const checkTwitchChat = async (
       });
   }
 
+  const result = await getAllFamousLinks(client);
   const famousChecker = (value: string) =>
-    famous.some((element) => value.includes(element));
+    result.some((element) => value.includes(element));
 
   if (famousChecker(message.toLowerCase())) {
     client

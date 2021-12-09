@@ -19,7 +19,7 @@ export default {
       { $push: { famous: text.toLowerCase() } },
       { new: true, upsert: true, setDefaultsOnInsert: true }
     );
-    client.famousCache.add(text.toLowerCase());
+    client.famousCache.push(text.toLowerCase());
     return client.say(
       channel,
       `/me You have added "${text}" to the famous links database.`

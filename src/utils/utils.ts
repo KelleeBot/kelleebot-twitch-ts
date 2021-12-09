@@ -47,6 +47,17 @@ export const getAllChannels = async () => {
   return channels;
 };
 
+export const getAllFamousLinks = async (client: Client) => {
+  if (client.famousCache.length) return client.famousCache;
+  const results = (await client.DBFamousLinks.find({})) as any;
+  for (const result of results) {
+    for (const famous of result.famous) {
+      client.famousCache.push(famous);
+    }
+  }
+  return client.famousCache;
+};
+
 /**
  * Helper function to check if correct arguments were passed in
  * @param {String} message The message to process

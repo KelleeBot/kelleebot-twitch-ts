@@ -7,7 +7,7 @@ interface Client {
   categories: Map<string, string[]>;
   channelInfoCache: Map<string, ChannelInfo>;
   blacklistCache: Set<string>;
-  famousCache: Set<string>;
+  famousCache: Array<string>;
   DBChannel: Model<ChannelInfo>;
   DBUser: Model<UserInfo>;
   DBBlacklist: Model<object>;
@@ -23,7 +23,7 @@ class Client extends TMI.Client {
     this.categories = new Map();
     this.channelInfoCache = new Map();
     this.blacklistCache = new Set();
-    this.famousCache = new Set();
+    this.famousCache = new Array();
     this.importSchemas();
     this.channelCooldowns = new Map();
     this.globalCooldowns = new Map();

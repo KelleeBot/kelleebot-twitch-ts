@@ -37,9 +37,16 @@ export default async (
         //   );
         // }
 
+        if (channelInfo._id === "ramenbomber_") {
+            if (!message.startsWith(channelInfo.prefix) && message.toLowerCase().includes("uwu")) {
+                return client.say(channel, "PrideUwu PrideUwu");
+            }
+        }
+
         const prefixRegex = new RegExp(
             `^(@${process.env.BOT_USERNAME}|${escapeRegex(channelInfo.prefix)})`
         );
+
         if (!prefixRegex.test(message)) return;
 
         //@ts-ignore

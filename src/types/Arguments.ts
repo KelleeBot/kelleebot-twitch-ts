@@ -1,4 +1,3 @@
-import { StringArgument } from "../interfaces/StringArgument";
-import { NumberArgument } from "../interfaces/NumberArgument";
+import { NumberArgument, StringArgument } from "../interfaces/";
 
 export type Arguments = (StringArgument | NumberArgument)[];

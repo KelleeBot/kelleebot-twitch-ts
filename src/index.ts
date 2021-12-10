@@ -8,11 +8,7 @@ dotenv.config();
 (async () => {
     try {
         await mongoose.connect(`${process.env.MONGO_PATH}`);
-        log(
-            "SUCCESS",
-            `${__filename}`,
-            "Successfully connected to the database."
-        );
+        log("SUCCESS", `${__filename}`, "Successfully connected to the database.");
     } catch (e) {
         log("ERROR", `${__filename}`, `Error connecting to database: ${e}`);
         process.exit(1);
@@ -35,7 +31,7 @@ dotenv.config();
                 username: `${process.env.BOT_USERNAME}`,
                 password: `${process.env.OAUTH_TOKEN}`
             },
-            channels: ["iaraaron"]
+            channels//: ["iaraaron"]
         };
 
         const client = new Client(opts);

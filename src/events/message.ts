@@ -64,10 +64,7 @@ export default async (
 
         if (channelInfo.disabledCommands.includes(command.name)) return;
 
-        if (
-            command.channels === "all" ||
-            typeof command.channels === "undefined"
-        ) {
+        if (command.channels === "all" || typeof command.channels === "undefined") {
             command.channels = await getAllChannels();
         }
 
@@ -75,28 +72,19 @@ export default async (
             command.channels = [command.channels];
         }
 
-        if (!command.channels.includes(channel.slice(1))) return;
+        if (!command.channels.includes(channel)) return;
 
         const cd = await getCooldown(client, command, channel);
         let cooldowns;
         if (cd) {
-            if (
-                typeof command.globalCooldown === "undefined" ||
-                command.globalCooldown
-            ) {
+            if (typeof command.globalCooldown === "undefined" || command.globalCooldown) {
                 if (!client.globalCooldowns.has(command.name)) {
-                    client.globalCooldowns.set(
-                        command.name,
-                        new Map<string, number>()
-                    );
+                    client.globalCooldowns.set(command.name, new Map<string, number>());
                 }
                 cooldowns = client.globalCooldowns;
             } else {
                 if (!client.channelCooldowns.has(channel)) {
-                    client.channelCooldowns.set(
-                        channel,
-                        new Map<string, Map<string, number>>()
-                    );
+                    client.channelCooldowns.set(channel, new Map<string, Map<string, number>>());
                 }
                 cooldowns = client.channelCooldowns.get(channel);
                 if (!cooldowns!.has(command.name)) {
@@ -107,17 +95,19 @@ export default async (
             const now = Date.now();
             const timestamps = cooldowns!.get(command.name);
             const cooldownAmount = cd * 1000;
-            if (timestamps!.has(userstate.username)) {
+            if (timestamps?.has(`${userstate["user-id"]}-${channel}`)) {
                 const expirationTime =
-                    timestamps!.get(userstate.username)! + cooldownAmount;
-                if (now < expirationTime) {
+                    timestamps?.get(`${userstate["user-id"]}-${channel}`)! + cooldownAmount;
+                if (now < expirationTime)
                     return console.log(
-                        `${command.name} on cooldown for another ${msToTime(
-                            expirationTime - now
-                        )}.`
+                        `Command on cooldown. Cooldown expires in ${msToTime(expirationTime - now)}`
                     );
-                }
             }
+            timestamps?.set(`${userstate["user-id"]}-${channel}`, now);
+            setTimeout(
+                () => timestamps?.delete(`${userstate["user-id"]}-${channel}`),
+                cooldownAmount
+            );
         }
 
         let flags;
@@ -158,11 +148,7 @@ const checkTwitchChat = async (
     message: string,
     channel: string
 ) => {
-    if (
-        userstate.mod ||
-        (await isBroadcaster(client, userstate.username, channel))
-    )
-        return;
+    if (userstate.mod || (await isBroadcaster(client, userstate.username, channel))) return;
 
     if (message.length > 450) {
         client
@@ -179,17 +165,13 @@ const checkTwitchChat = async (
     }
 
     const result = await getAllFamousLinks(client);
-    const famousChecker = (value: string) =>
-        result.some((element) => value.includes(element));
+    const famousChecker = (value: string) => result.some((element) => value.includes(element));
 
     if (famousChecker(message.toLowerCase())) {
         client
             .ban(channel, userstate.username)
             .then(() => {
-                client.say(
-                    channel,
-                    `/me No, I don't wanna become famous. Good bye!`
-                );
+                client.say(channel, `/me No, I don't wanna become famous. Good bye!`);
             })
             .catch((e) => {
                 log("ERROR", `${__filename}`, e);
@@ -203,10 +185,7 @@ const checkTwitchChat = async (
         client
             .ban(channel, userstate.username)
             .then(() => {
-                client.say(
-                    channel,
-                    `/me No, I don't want a boost on Twitch. Get outta here!`
-                );
+                client.say(channel, `/me No, I don't want a boost on Twitch. Get outta here!`);
             })
             .catch((e) => {
                 log("ERROR", `${__filename}`, `An error has occurred: ${e}`);

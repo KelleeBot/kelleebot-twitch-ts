@@ -4,12 +4,7 @@ import shoutouts from "../config/shoutouts.json";
 
 const autoShoutoutChannels = ["mackthevoid", "ramenbomber_", "jkirstyn"];
 
-export default async (
-    client: Client,
-    channel: string,
-    username: string,
-    viewers: number
-) => {
+export default async (client: Client, channel: string, username: string, viewers: number) => {
     const channelName = channel.slice(1).toLowerCase();
 
     if (autoShoutoutChannels.includes(channelName)) {

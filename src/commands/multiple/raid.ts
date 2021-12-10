@@ -11,7 +11,7 @@ export default {
     name: "raid",
     category: "Multiple",
     cooldown: 15,
-    channels: ["ramenbomber_", "mackthevoid"],
+    channels: ["#ramenbomber_", "#mackthevoid"],
     execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);
         const channelName = channel.slice(1).toLowerCase();

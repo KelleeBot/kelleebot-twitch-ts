@@ -5,7 +5,7 @@ import channelSchema from "../../models/channelSchema";
 export default {
     name: "leave",
     category: "KelleeBot",
-    channels: ["kelleebot"],
+    channels: ["#kelleebot"],
     async execute({ client, channel, userstate }) {
         const result = await channelSchema.findOneAndDelete({
             _id: userstate.username
@@ -25,10 +25,7 @@ export default {
             })
             .catch((e) => {
                 log("ERROR", `${__filename}`, `An error has occurred: ${e}`);
-                return client.say(
-                    channel,
-                    `/me An error occurred. Please try again.`
-                );
+                return client.say(channel, `/me An error occurred. Please try again.`);
             });
         return;
     }

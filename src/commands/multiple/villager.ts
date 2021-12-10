@@ -9,7 +9,7 @@ export default {
     name: "villager",
     category: "Animal Crossing",
     cooldown: 15,
-    channels: ["jkirstyn", "krisypaulinee"],
+    channels: ["#jkirstyn", "#krisypaulinee", "#bearyclairey"],
     arguments: [
         {
             type: "STRING",
@@ -25,20 +25,14 @@ export default {
         setCooldown(client, this, channel, userstate);
         const data = await fetchVillagerName(query);
         if (!data.length) {
-            const matches = stringSimilarity.findBestMatch(
-                query,
-                await fetchAllVillagerNames()
-            );
+            const matches = stringSimilarity.findBestMatch(query, await fetchAllVillagerNames());
             const options = matches.ratings
                 .filter((v) => v.rating >= 0.3)
                 .sort((a, b) => b.rating - a.rating)
                 .slice(0, Math.min(5, matches.ratings.length));
 
             if (!options.length)
-                return client.say(
-                    channel,
-                    `/me I couldn't find that villager kellee1Cry`
-                );
+                return client.say(channel, `/me I couldn't find that villager kellee1Cry`);
 
             const { bestMatch } = matches;
             return client.say(

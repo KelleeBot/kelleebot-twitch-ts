@@ -6,7 +6,7 @@ export default {
     name: "pokemon",
     category: "jkirstyn",
     cooldown: 15,
-    channels: ["jkirstyn"],
+    channels: ["#jkirstyn"],
     async execute({ client, channel, userstate }) {
         const obj = {
             channel: channel.slice(1),
@@ -30,9 +30,7 @@ export default {
 
             return client.say(
                 channel,
-                `/me ${
-                    userstate["display-name"]
-                }, you have caught a total of ${total} Pokémon${
+                `/me ${userstate["display-name"]}, you have caught a total of ${total} Pokémon${
                     total !== 1 ? "s" : ""
                 }! Here is your Pokédex: ${pokemons}.`
             );

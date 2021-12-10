@@ -12,8 +12,4 @@ const channelSchema = new Schema({
     commandAlias: {}
 });
 
-export default model(
-    "twitch-channels-schema",
-    channelSchema,
-    "twitch-channels-schema"
-);
+export default model("twitch-channels-schema", channelSchema, "twitch-channels-schema");

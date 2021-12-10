@@ -3,8 +3,7 @@ import { setCooldown } from "../../utils";
 
 const hugMsg = {
     ramenbomber_: "<from> gives <to> a big hug! PrideRise",
-    mackthevoid:
-        "<from> hugs <to> from 6 feet away! I love you (⊃｡•́‿•̀｡)⊃ you are doing great.",
+    mackthevoid: "<from> hugs <to> from 6 feet away! I love you (⊃｡•́‿•̀｡)⊃ you are doing great.",
     b0ss_99: "<from> gives <to> a big hug! PrideRise"
 } as { [key: string]: string };
 
@@ -12,7 +11,7 @@ export default {
     name: "hug",
     category: "Multiple",
     cooldown: 15,
-    channels: ["ramenbomber_", "mackthevoid", "b0ss_99"],
+    channels: ["#ramenbomber_", "#mackthevoid", "#b0ss_99"],
     arguments: [
         {
             type: "STRING",

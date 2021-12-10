@@ -36,10 +36,7 @@ export default {
 
         const command = client.commands.get(args[1].toLowerCase());
         if (!command) {
-            return client.say(
-                channel,
-                `/me The command "${args[1]}" does not exist.`
-            );
+            return client.say(channel, `/me The command "${args[1]}" does not exist.`);
         }
 
         if (command.canNotDisable) {
@@ -66,10 +63,7 @@ export default {
 
                 channelInfo.disabledCommands.push(command.name);
                 client.channelInfoCache.set(channelName, channelInfo);
-                client.say(
-                    channel,
-                    `/me The command "${command.name}" has been disabled.`
-                );
+                client.say(channel, `/me The command "${command.name}" has been disabled.`);
                 break;
             case "enable":
                 if (!disabledCommands.includes(command.name)) {
@@ -85,10 +79,7 @@ export default {
                     { upsert: true, new: true }
                 );
                 client.channelInfoCache.set(channelName, channelInfo);
-                client.say(
-                    channel,
-                    `/me The command "${command.name}" has been enabled.`
-                );
+                client.say(channel, `/me The command "${command.name}" has been enabled.`);
                 break;
         }
         return;

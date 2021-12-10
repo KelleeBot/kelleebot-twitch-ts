@@ -4,7 +4,7 @@ import { setCooldown } from "../../utils";
 export default {
     name: "smp",
     category: "ramenbomber_",
-    channels: ["ramenbomber_"],
+    channels: ["#ramenbomber_"],
     cooldown: 60,
     execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);

@@ -5,7 +5,7 @@ export default {
     name: "pc",
     aliases: ["podcast"],
     category: "mackthevoid",
-    channels: ["mackthevoid"],
+    channels: ["#mackthevoid"],
     cooldown: 15,
     execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);

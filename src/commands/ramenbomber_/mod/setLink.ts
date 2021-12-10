@@ -5,7 +5,7 @@ export default {
     name: "setlink",
     aliases: ["setcode", "setroom", "setroomcode"],
     category: "Moderation/ramenbomber_",
-    channels: ["ramenbomber_"],
+    channels: ["#ramenbomber_"],
     isModOnly: true,
     arguments: [
         {

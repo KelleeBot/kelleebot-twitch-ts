@@ -7,13 +7,7 @@ export default {
     name: "so",
     aliases: ["shoutout"],
     category: "Mod",
-    channels: [
-        "ramenbomber_",
-        "7squish",
-        "mackthevoid",
-        "bearyclairey",
-        "jkirstyn"
-    ],
+    channels: ["#ramenbomber_", "#7squish", "#mackthevoid", "#bearyclairey", "#jkirstyn"],
     isModOnly: true,
     arguments: [
         {
@@ -22,14 +16,9 @@ export default {
         }
     ],
     async execute({ client, channel, args }) {
-        const userToSO = args[0].startsWith("@")
-            ? args[0].replace("@", "")
-            : args[0];
+        const userToSO = args[0].startsWith("@") ? args[0].replace("@", "") : args[0];
 
-        if (
-            userToSO.toLowerCase() ===
-            `${process.env.BOT_USERNAME?.toLocaleUpperCase()}`
-        ) {
+        if (userToSO.toLowerCase() === `${process.env.BOT_USERNAME?.toLocaleUpperCase()}`) {
             return client.say(
                 channel,
                 `/me Don't shout me out please. I don't like the attention.`
@@ -38,15 +27,11 @@ export default {
 
         const game = (
             await fetch(
-                `https://beta.decapi.me/twitch/game${encodeURIComponent(
-                    userToSO.toLowerCase()
-                )}`
+                `https://beta.decapi.me/twitch/game${encodeURIComponent(userToSO.toLowerCase())}`
             )
         )
             .then((r: Response) => r.text())
-            .catch((e: Error) =>
-                log("ERROR", `${__filename}`, `An error has occurred: ${e}`)
-            );
+            .catch((e: Error) => log("ERROR", `${__filename}`, `An error has occurred: ${e}`));
         if (!game || typeof game === "undefined") {
             return client.say(
                 channel,
@@ -54,21 +39,13 @@ export default {
             );
         }
 
-        if (
-            game.toLowerCase().includes("no user") ||
-            game.toLowerCase() === "404 page not found"
-        ) {
-            return client.say(
-                channel,
-                `/me I couldn't find that user kellee1Cry`
-            );
+        if (game.toLowerCase().includes("no user") || game.toLowerCase() === "404 page not found") {
+            return client.say(channel, `/me I couldn't find that user kellee1Cry`);
         }
 
         //@ts-ignore
         let shoutout = shoutouts[channel.slice(1).toLowerCase()];
-        shoutout = shoutout
-            .replace(/<USER>/g, userToSO)
-            .replace(/<GAME>/g, game);
+        shoutout = shoutout.replace(/<USER>/g, userToSO).replace(/<GAME>/g, game);
         return client.say(channel, `/me ${shoutout}`);
     }
 } as Command;

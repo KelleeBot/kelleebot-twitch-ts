@@ -17,7 +17,7 @@ export default {
     name: "catch",
     aliases: ["redeempokemon"],
     category: "Moderation/jkirstyn",
-    channels: ["jkirstyn"],
+    channels: ["#jkirstyn"],
     cooldown: 15,
     isModOnly: true,
     arguments: [
@@ -70,9 +70,7 @@ const getRandomPokemon = async (pokedexNum: number) => {
     return new Promise(async (resolve, reject) => {
         try {
             const body = await fetch(
-                `https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(
-                    pokedexNum
-                )}`
+                `https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(pokedexNum)}`
             );
             const result = await body.json();
             const pokemon = capFirstLetter(result.species.name);

@@ -14,7 +14,7 @@ const bonks = [
 export default {
     name: "bonk",
     category: "ramenbomber_",
-    channels: ["ramenbomber_"],
+    channels: ["#ramenbomber_"],
     cooldown: 15,
     arguments: [
         {
@@ -28,10 +28,7 @@ export default {
             ? args[0].replace("@", "").trim()
             : args[0].trim();
 
-        if (
-            userToBonk.toLowerCase() ===
-            `${process.env.BOT_USERNAME?.toLowerCase()}`
-        ) {
+        if (userToBonk.toLowerCase() === `${process.env.BOT_USERNAME?.toLowerCase()}`) {
             return client.say(
                 channel,
                 `/me Nuh uh uh, nice try, but you can't bonk me cause I'll bonk you instead BOP BOP BOP`

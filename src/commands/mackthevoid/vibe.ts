@@ -3,6 +3,7 @@ import { setCooldown } from "../../utils";
 
 export default {
     name: "vibe",
+    category: "mackthevoid",
     channels: ["mackthevoid"],
     cooldown: 15,
     execute({ client, channel, userstate }) {

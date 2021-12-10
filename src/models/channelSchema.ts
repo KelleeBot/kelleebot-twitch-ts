@@ -7,6 +7,7 @@ const channelSchema = new Schema({
         type: String
     },
     disabledCommands: Array,
+    commands: Array,
     commandPerms: {},
     commandCooldowns: {},
     commandAlias: {}

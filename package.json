@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "date-fns": "^2.27.0",
+    "date-fns-tz": "^1.1.6",
     "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
     "mongoose": "^6.0.14",

@@ -5,7 +5,7 @@ export default {
     name: "smp",
     category: "ramenbomber_",
     channels: ["ramenbomber_"],
-    cooldown: 15,
+    cooldown: 60,
     execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);
         return client.say(

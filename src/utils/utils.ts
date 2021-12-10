@@ -4,6 +4,7 @@ import { Command } from "../interfaces/Command";
 import { Arguments } from "../types/Arguments";
 import { Flags } from "../types/Flags";
 import channelSchema from "../models/channelSchema";
+import fetch from "node-fetch";
 import utc from "dayjs/plugin/utc";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
@@ -334,10 +335,9 @@ export const isModOrVIP = async (client: Client, channel: string) => {
 };
 
 export const getCurrentGame = (channel: string) => {
-    const channelName = channel.slice(1).toLowerCase();
     return new Promise(async (resolve, reject) => {
         try {
-            const body = await fetch(`https://beta.decapi.me/twitch/game/${channelName}`);
+            const body = await fetch(`https://beta.decapi.me/twitch/game/${channel}`);
             const result = await body.text();
             if (result) {
                 resolve(result);

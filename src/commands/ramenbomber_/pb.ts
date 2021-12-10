@@ -17,7 +17,7 @@ export default {
     async execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);
         try {
-            const currentGame = (await getCurrentGame(channel)) as string;
+            const currentGame = (await getCurrentGame(channel.slice(1))) as string;
             const result = await getPB(channel.slice(1).toLowerCase(), currentGame);
             if (!result) {
                 return client.say(channel, `/me No PB for "${currentGame}" has been set yet.`);

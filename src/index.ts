@@ -31,7 +31,7 @@ dotenv.config();
                 username: `${process.env.BOT_USERNAME}`,
                 password: `${process.env.OAUTH_TOKEN}`
             },
-            channels//: ["iaraaron"]
+            channels //: ["iaraaron"]
         };
 
         const client = new Client(opts);

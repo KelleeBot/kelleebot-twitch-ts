@@ -1,5 +1,5 @@
 import { Command } from "../../../interfaces";
-import { setLink, log, getChannelInfo, errorMessage } from "../../../utils";
+import { setLink, log, errorMessage } from "../../../utils";
 
 export default {
     name: "setlink",

@@ -7,7 +7,7 @@ import { utcToZonedTime, format } from "date-fns-tz";
 
 const headers = {
     "client-id": process.env.TWITCH_CLIENT_ID,
-    Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`
+    Authorization: `Bearer ${process.env.TWITCH_BEARER_TOKEN}`
 };
 
 export default {

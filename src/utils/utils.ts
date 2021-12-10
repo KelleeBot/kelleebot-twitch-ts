@@ -226,7 +226,6 @@ export const setCooldown = async (
     const timestamps = cooldowns!.get(command.name);
     const cooldownAmount = cd * 1000;
 
-    console.log(timestamps);
     timestamps!.set(userstate["user-id"]!, now);
     setTimeout(() => timestamps!.delete(userstate["user-id"]!), cooldownAmount);
 };

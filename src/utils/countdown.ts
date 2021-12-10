@@ -8,7 +8,7 @@ export const countdown = (client: Client, channel: string, seconds: number) => {
             client.say(channel, "/me Go!");
             client.say(channel, "/color HotPink");
             clearTimeout(interval);
-            cdStarted[channel] = false;
+            cdStarted[channel.slice(1)] = false;
         }
 
         if (seconds % 10 == 0 && seconds != 0) {

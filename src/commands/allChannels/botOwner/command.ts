@@ -1,6 +1,5 @@
 import { Command } from "../../../interfaces";
-import { log, getChannelInfo } from "../../../utils";
-import { set } from "mongoose";
+import { getChannelInfo } from "../../../utils";
 
 export default {
     name: "command",

@@ -360,3 +360,22 @@ export const isModOrVIP = async (client: Client, channel: string) => {
         mods.includes(`${process.env.BOT_USERNAME}`)
     );
 };
+
+export const getCurrentGame = (channel: string) => {
+    const channelName = channel.slice(1).toLowerCase();
+    return new Promise(async (resolve, reject) => {
+        try {
+            const body = await fetch(
+                `https://beta.decapi.me/twitch/game/${channelName}`
+            );
+            const result = await body.text();
+            if (result) {
+                resolve(result);
+            } else {
+                reject("There was a problem retrieving game data.");
+            }
+        } catch (e) {
+            log("ERROR", `${__filename}`, `An error has occurred : ${e}`);
+        }
+    });
+};

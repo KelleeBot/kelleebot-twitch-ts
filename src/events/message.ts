@@ -6,7 +6,8 @@ import {
     isBroadcaster,
     log,
     msToTime,
-    processArguments
+    processArguments,
+    getUserInfo
 } from "../utils";
 import { devs } from "../config/config.json";
 import { Client } from "../Client";
@@ -22,9 +23,10 @@ export default async (
     self: boolean
 ) => {
     try {
-        if (self || userstate.bot) return;
-
+        const userInfo = await getUserInfo(client, userstate["user-id"]!);
         checkTwitchChat(client, userstate, message, channel);
+
+        if (self || userstate.bot || userInfo.isBlacklisted) return;
 
         let channelInfo = await getChannelInfo(client, channel);
 

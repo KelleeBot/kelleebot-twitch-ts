@@ -10,7 +10,8 @@ export default {
     arguments: [
         {
             type: "STRING",
-            prompt: "Please specify enable/disable."
+            prompt: "Please specify enable/disable.",
+            words: ["enable", "disable"]
         },
         {
             type: "STRING",
@@ -21,17 +22,6 @@ export default {
         const channelName = channel.slice(1);
         let channelInfo = await getChannelInfo(client, channel);
         const disabledCommands = channelInfo.disabledCommands;
-
-        if (args.length < 2) {
-            return client.say(
-                channel,
-                `/me ${channelInfo.prefix}command <enable || disable> <command>`
-            );
-        }
-
-        if (!args[1]) {
-            return client.say(channel, `/me Please specify a command.`);
-        }
 
         const command = client.commands.get(args[1].toLowerCase());
         if (!command) {

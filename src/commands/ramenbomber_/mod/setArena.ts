@@ -1,5 +1,5 @@
 import { Command } from "../../../interfaces";
-import { setArenaIDAndPass, log, getChannelInfo, errorMessage } from "../../../utils";
+import { setArenaIDAndPass, log, errorMessage } from "../../../utils";
 
 export default {
     name: "setarena",
@@ -17,15 +17,9 @@ export default {
         }
     ],
     async execute({ client, channel, args, userstate }) {
-        const channelInfo = await getChannelInfo(client, channel);
-
-        if (args.length < 2) {
-            return client.say(channel, `/me Usage: ${channelInfo.prefix}setarena <ID> <Password>`);
-        }
-
-        const arenaID = args[0];
-        const arenaPass = args[1];
         try {
+            const arenaID = args[0];
+            const arenaPass = args[1];
             await setArenaIDAndPass(channel.slice(1), userstate, arenaID, arenaPass);
             return client.say(channel, `/me The Arena ID and Password have been updated.`);
         } catch (e) {

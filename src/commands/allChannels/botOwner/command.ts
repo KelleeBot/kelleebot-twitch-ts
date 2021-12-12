@@ -10,7 +10,7 @@ export default {
     arguments: [
         {
             type: "STRING",
-            prompt: "Please specify enable/disable.",
+            prompt: "Please specify either enable/disable.",
             words: ["enable", "disable"]
         },
         {
@@ -26,6 +26,12 @@ export default {
         const command = client.commands.get(args[1].toLowerCase());
         if (!command) {
             return client.say(channel, `/me The command "${args[1]}" does not exist.`);
+        }
+
+        if (Array.isArray(command.channels)) {
+            if (!command.channels.includes(channel)) {
+                return client.say(channel, `/me The command "${args[1]}" does not exist for this channel.`);
+            }
         }
 
         if (command.canNotDisable) {

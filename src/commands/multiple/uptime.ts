@@ -6,14 +6,12 @@ export default {
     name: "uptime",
     category: "Multiple",
     cooldown: 15,
-    channels: ["ramenbomber_", "mackthevoid"],
+    channels: ["#ramenbomber_", "#mackthevoid"],
     async execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);
         const data = (
             await fetch(
-                `https://beta.decapi.me/twitch/uptime/${encodeURIComponent(
-                    channel.slice(1)
-                )}`
+                `https://beta.decapi.me/twitch/uptime/${encodeURIComponent(channel.slice(1))}`
             )
         )
             .then((r: Response) => r.text())
@@ -23,12 +21,8 @@ export default {
 
         if (!data) return errorMessage(client, channel);
 
-        if (data.toLowerCase().includes("offline"))
-            return client.say(channel, `/me ${data}`);
+        if (data.toLowerCase().includes("offline")) return client.say(channel, `/me ${data}`);
 
-        return client.say(
-            channel,
-            `/me ${channel.slice(1)} has been live for ${data}.`
-        );
+        return client.say(channel, `/me ${channel.slice(1)} has been live for ${data}.`);
     }
 } as Command;

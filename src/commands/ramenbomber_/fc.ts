@@ -5,7 +5,7 @@ export default {
     name: "fc",
     aliases: ["friendcode"],
     category: "ramenbomber_",
-    channels: ["ramenbomber_"],
+    channels: ["#ramenbomber_"],
     cooldown: 15,
     execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);

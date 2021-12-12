@@ -7,13 +7,13 @@ import { utcToZonedTime, format } from "date-fns-tz";
 
 const headers = {
     "client-id": process.env.TWITCH_CLIENT_ID,
-    Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`
+    Authorization: `Bearer ${process.env.TWITCH_BEARER_TOKEN}`
 };
 
 export default {
     name: "accountage",
     category: "jkirstyn",
-    channels: ["jkirstyn"],
+    channels: ["#jkirstyn"],
     cooldown: 15,
     async execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);
@@ -26,19 +26,13 @@ export default {
 
         const { login, created_at } = account.data[0];
         const timeFormat = "EEE, MMM d, yyyy h:mm a zzz";
-        const createdAtEasternDate = utcToZonedTime(
-            created_at,
-            "America/New_York"
-        );
+        const createdAtEasternDate = utcToZonedTime(created_at, "America/New_York");
         const msg = `${format(createdAtEasternDate, timeFormat, {
             timeZone: "America/New_York"
         })} (${formatDistance(new Date(created_at), new Date(), {
             addSuffix: true
         })})`;
-        return client.say(
-            channel,
-            `/me ${login}, your account was created on ${msg}.`
-        );
+        return client.say(channel, `/me ${login}, your account was created on ${msg}.`);
     }
 } as Command;
 

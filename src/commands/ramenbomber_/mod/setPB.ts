@@ -4,7 +4,7 @@ import { setPB, log, getCurrentGame, errorMessage } from "../../../utils";
 export default {
     name: "setpb",
     category: "Moderation/ramenbomber_",
-    channels: ["ramenbomber_"],
+    channels: ["#ramenbomber_"],
     isModOnly: true,
     arguments: [
         {
@@ -15,12 +15,9 @@ export default {
     async execute({ client, channel, args }) {
         const text = args.join(" ");
         try {
-            const game = (await getCurrentGame(channel)) as string;
+            const game = (await getCurrentGame(channel.slice(1))) as string;
             await setPB(channel.slice(1), text, game);
-            return client.say(
-                channel,
-                `/me Your PB for "${game}" has been updated.`
-            );
+            return client.say(channel, `/me Your PB for "${game}" has been updated.`);
         } catch (e) {
             log("ERROR", `${__filename}`, `An error has occurred: ${e}`);
             return errorMessage(client, channel);

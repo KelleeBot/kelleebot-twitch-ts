@@ -6,7 +6,7 @@ export default {
     name: "followage",
     category: "Multple",
     cooldown: 15,
-    channels: ["jkirstyn", "ramenbomber_", "mackthevoid"],
+    channels: ["#jkirstyn", "#ramenbomber_", "#mackthevoid"],
     async execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);
         const data = (
@@ -17,9 +17,7 @@ export default {
             )
         )
             .then((r: Response) => r.text())
-            .catch((e: Error) =>
-                log("ERROR", `${__filename}`, `An error has occurred: ${e}`)
-            );
+            .catch((e: Error) => log("ERROR", `${__filename}`, `An error has occurred: ${e}`));
         if (!data) {
             return errorMessage(client, channel);
         }
@@ -34,9 +32,7 @@ export default {
 
         return client.say(
             channel,
-            `/me ${
-                userstate["display-name"]
-            } has been following ${channel.slice(1)} for ${data}.`
+            `/me ${userstate["display-name"]} has been following ${channel.slice(1)} for ${data}.`
         );
     }
 } as Command;

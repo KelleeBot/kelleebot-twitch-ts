@@ -4,7 +4,7 @@ import discordInvites from "../../../config/discordInvites.json";
 export default {
     name: "discord",
     category: "Mod",
-    channels: ["ramenbomber_", "jkirstyn"],
+    channels: ["#ramenbomber_", "#jkirstyn"],
     isModOnly: true,
     execute({ client, channel }) {
         const channelName = channel.slice(1).toLowerCase();

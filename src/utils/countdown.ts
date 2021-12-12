@@ -8,14 +8,11 @@ export const countdown = (client: Client, channel: string, seconds: number) => {
             client.say(channel, "/me Go!");
             client.say(channel, "/color HotPink");
             clearTimeout(interval);
-            cdStarted[channel] = false;
+            cdStarted[channel.slice(1)] = false;
         }
 
         if (seconds % 10 == 0 && seconds != 0) {
-            client.say(
-                channel,
-                `/me Countdown happening in ${seconds} seconds...`
-            );
+            client.say(channel, `/me Countdown happening in ${seconds} seconds...`);
         }
 
         if (seconds == 6) {
@@ -29,12 +26,7 @@ export const countdown = (client: Client, channel: string, seconds: number) => {
     }, 1000);
 };
 
-export const countdownTeams = (
-    client: Client,
-    channel: string,
-    seconds: number,
-    color: string
-) => {
+export const countdownTeams = (client: Client, channel: string, seconds: number, color: string) => {
     switch (color) {
         case "r":
             client.color("FireBrick");

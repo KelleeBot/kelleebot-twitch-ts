@@ -6,22 +6,18 @@ export default {
     name: "followedon",
     category: "Multple",
     cooldown: 15,
-    channels: ["jkirstyn", "ramenbomber_", "mackthevoid"],
+    channels: ["#jkirstyn", "#ramenbomber_", "#mackthevoid"],
     async execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);
         const data = (
             await fetch(
                 `https://beta.decapi.me/twitch/followed/${channel.slice(1)}/${
                     userstate.username
-                }?tz=America/New_York&format=${encodeURIComponent(
-                    "d/m/Y g:i:s A T"
-                )}`
+                }?tz=America/New_York&format=${encodeURIComponent("d/m/Y g:i:s A T")}`
             )
         )
             .then((r: Response) => r.text())
-            .catch((e: Error) =>
-                log("ERROR", `${__filename}`, `An error has occurred: ${e}`)
-            );
+            .catch((e: Error) => log("ERROR", `${__filename}`, `An error has occurred: ${e}`));
 
         if (!data) return errorMessage(client, channel);
 
@@ -35,9 +31,7 @@ export default {
 
         return client.say(
             channel,
-            `/me ${userstate["display-name"]} followed ${channel.slice(
-                1
-            )} on ${data}.`
+            `/me ${userstate["display-name"]} followed ${channel.slice(1)} on ${data}.`
         );
     }
 } as Command;

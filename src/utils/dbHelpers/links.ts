@@ -28,11 +28,7 @@ export const getLink = async (channelName: string) => {
     }
 };
 
-export const setLink = async (
-    channelName: string,
-    userstate: Userstate,
-    link: string
-) => {
+export const setLink = async (channelName: string, userstate: Userstate, link: string) => {
     try {
         const result = await linkSchema.findByIdAndUpdate(
             { _id: channelName },

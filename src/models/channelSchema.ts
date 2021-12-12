@@ -7,13 +7,10 @@ const channelSchema = new Schema({
         type: String
     },
     disabledCommands: Array,
+    commands: Array,
     commandPerms: {},
     commandCooldowns: {},
     commandAlias: {}
 });
 
-export default model(
-    "twitch-channels-schema",
-    channelSchema,
-    "twitch-channels-schema"
-);
+export default model("twitch-channels-schema", channelSchema, "twitch-channels-schema");

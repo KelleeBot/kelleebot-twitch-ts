@@ -15,6 +15,8 @@ export interface ChannelInfo {
         [nameOfTheCommand: string]: { [id: string]: number };
     };
 
+    commands?: string[];
+
     /** Contains all custom command aliases */
     commandAlias?: { [alias: string]: string };
 }

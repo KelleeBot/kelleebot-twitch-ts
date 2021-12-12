@@ -6,7 +6,7 @@ import { prefix } from "../../config/config.json";
 export default {
     name: "join",
     category: "KelleeBot",
-    channels: ["kelleebot"],
+    channels: ["#kelleebot"],
     async execute({ client, channel, userstate }) {
         try {
             await new channelSchema({
@@ -23,15 +23,8 @@ export default {
                     );
                 })
                 .catch((e) => {
-                    log(
-                        "ERROR",
-                        `${__filename}`,
-                        `An error has occurred: ${e}`
-                    );
-                    return client.say(
-                        channel,
-                        `/me An error has occurred. Please try again.`
-                    );
+                    log("ERROR", `${__filename}`, `An error has occurred: ${e}`);
+                    return client.say(channel, `/me An error has occurred. Please try again.`);
                 });
         } catch (e) {
             log("ERROR", `${__filename}`, `An error has occurred: ${e}`);

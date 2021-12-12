@@ -20,9 +20,6 @@ export default {
             { new: true, upsert: true, setDefaultsOnInsert: true }
         );
         client.famousCache.push(text.toLowerCase());
-        return client.say(
-            channel,
-            `/me You have added "${text}" to the famous links database.`
-        );
+        return client.say(channel, `/me You have added "${text}" to the famous links database.`);
     }
 } as Command;

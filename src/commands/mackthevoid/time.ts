@@ -11,13 +11,11 @@ dayjs.extend(advanced);
 export default {
     name: "time",
     category: "mackthevoid",
-    channels: ["mackthevoid"],
+    channels: ["#mackthevoid"],
     cooldown: 15,
     execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);
-        const time = dayjs()
-            .tz("America_Denver")
-            .format("DD/MM/YYYY h:mm:ss A z");
+        const time = dayjs().tz("America_Denver").format("DD/MM/YYYY h:mm:ss A z");
         return client.say(channel, `/me MacK's current time is ${time}.`);
     }
 } as Command;

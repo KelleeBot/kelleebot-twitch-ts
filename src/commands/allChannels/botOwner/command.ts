@@ -30,7 +30,10 @@ export default {
 
         if (Array.isArray(command.channels)) {
             if (!command.channels.includes(channel)) {
-                return client.say(channel, `/me The command "${args[1]}" does not exist for this channel.`);
+                return client.say(
+                    channel,
+                    `/me The command "${args[1]}" does not exist for this channel.`
+                );
             }
         }
 

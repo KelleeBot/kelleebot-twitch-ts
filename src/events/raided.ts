@@ -14,11 +14,11 @@ export default async (client: Client, channel: string, username: string, viewers
                 viewers !== 1 ? "s" : ""
             }! Welcome raiders!`
         );
-    }
 
-    const game = await getCurrentGame(channel.slice(1));
-    //@ts-ignore
-    let shoutout = shoutouts[channelName];
-    shoutout = shoutout.replace(/<USER>/g, username).replace(/<GAME>/g, game);
-    setTimeout(() => client.say(channel, `/me ${shoutout}`), 1000 * 5);
+        const game = await getCurrentGame(channel.slice(1));
+        //@ts-ignore
+        let shoutout = shoutouts[channelName];
+        shoutout = shoutout.replace(/<USER>/g, username).replace(/<GAME>/g, game);
+        setTimeout(() => client.say(channel, `/me ${shoutout}`), 1000 * 5);
+    }
 };

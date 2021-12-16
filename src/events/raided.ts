@@ -15,7 +15,7 @@ export default async (client: Client, channel: string, username: string, viewers
             }! Welcome raiders!`
         );
 
-        const game = await getCurrentGame(channel.slice(1));
+        const game = await getCurrentGame(username);
         //@ts-ignore
         let shoutout = shoutouts[channelName];
         shoutout = shoutout.replace(/<USER>/g, username).replace(/<GAME>/g, game);

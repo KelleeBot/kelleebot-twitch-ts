@@ -2,7 +2,8 @@ import { Command } from "../../interfaces";
 import { setCooldown } from "../../utils";
 
 export default {
-    name: "tiktok",
+    name: "carrd",
+    aliases: ["kofi", "ko-fi", "tiktok", "youtube", "yt"],
     category: "ramenbomber_",
     channels: ["#ramenbomber_"],
     cooldown: 15,
@@ -10,7 +11,7 @@ export default {
         setCooldown(client, this, channel, userstate);
         return client.say(
             channel,
-            `/me Heyo! Please follow me on Tik Tok https://vm.tiktok.com/ZM8MxjXos/`
+            "/me Hello! I'm Ramen Bomber! I produce content across a variety of different platforms and love to help spread good vibes through my work. Check out all of my platforms and portfolio here ~ https://ramenbomber.carrd.co"
         );
     }
 } as Command;

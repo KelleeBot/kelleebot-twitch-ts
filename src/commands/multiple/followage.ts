@@ -9,15 +9,14 @@ export default {
     channels: ["#jkirstyn", "#ramenbomber_", "#mackthevoid"],
     async execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);
-        const data = (
-            await fetch(
-                `https://beta.decapi.me/twitch/followage/${encodeURIComponent(
-                    channel.slice(1)
-                )}/${encodeURIComponent(userstate.username)}?precision=7`
-            )
-        )
-            .then((r: Response) => r.text())
-            .catch((e: Error) => log("ERROR", `${__filename}`, `An error has occurred: ${e}`));
+        const resp = await fetch(
+            `https://beta.decapi.me/twitch/followage/${encodeURIComponent(
+                channel.slice(1)
+            )}/${encodeURIComponent(userstate.username)}?precision=7`
+        ).catch((e: Error) => log("ERROR", `${__filename}`, `An error has occurred: ${e}`));
+
+        const data = await resp.text();
+
         if (!data) {
             return errorMessage(client, channel);
         }

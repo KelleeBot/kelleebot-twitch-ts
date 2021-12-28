@@ -13,12 +13,12 @@
   "license": "ISC",
   "dependencies": {
     "date-fns": "^2.27.0",
-    "date-fns-tz": "^1.1.6",
+    "date-fns-tz": "^1.2.2",
     "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
-    "mongoose": "^6.0.14",
-    "node-fetch": "^2.6.5",
-    "prettier": "^2.5.0",
+    "mongoose": "^6.1.4",
+    "node-fetch": "^2.6.6",
+    "prettier": "^2.5.1",
     "string-similarity": "^4.0.4",
     "tmi.js": "^1.8.5"
   },

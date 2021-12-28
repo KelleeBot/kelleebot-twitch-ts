@@ -38,9 +38,9 @@ export const log = (type: "SUCCESS" | "ERROR" | "WARNING" | "INFO", path: string
 };
 
 export const updateChannelsCache = (channel: string, join = true) => {
-    if (join) channels.push(channel);
+    if (join) channels.push(`#${channel}`);
     else {
-        const index = channels.indexOf(channel);
+        const index = channels.indexOf(`#${channel}`);
         if (index > -1) channels.splice(index, 1);
     }
 };

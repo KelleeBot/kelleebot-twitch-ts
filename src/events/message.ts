@@ -23,12 +23,14 @@ export default async (
     self: boolean
 ) => {
     try {
-        const userInfo = await getUserInfo(client, userstate["user-id"]!);
         checkTwitchChat(client, userstate, message, channel);
 
-        if (self || userstate.bot || userInfo.isBlacklisted) return;
+        if (self || userstate.bot) return;
 
         let channelInfo = await getChannelInfo(client, channel);
+        const userInfo = await getUserInfo(client, userstate["user-id"]!);
+
+        if (userInfo.isBlacklisted) return;
 
         // if (message.toLowerCase() === `@${process.env.BOT_USERNAME}`) {
         //   return client.say(

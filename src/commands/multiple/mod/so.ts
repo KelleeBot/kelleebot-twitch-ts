@@ -6,7 +6,14 @@ export default {
     name: "so",
     aliases: ["shoutout"],
     category: "Mod",
-    channels: ["#ramenbomber_", "#7squish", "#mackthevoid", "#bearyclairey", "#jkirstyn"],
+    channels: [
+        "#ramenbomber_",
+        "#7squish",
+        "#mackthevoid",
+        "#bearyclairey",
+        "#jkirstyn",
+        "#b0ss_99"
+    ],
     isModOnly: true,
     arguments: [
         {

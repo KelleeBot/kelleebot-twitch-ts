@@ -1,9 +1,9 @@
 import fetch from "node-fetch";
-import { Command } from "../../interfaces";
+import { Command, Villagers } from "../../interfaces";
 import { setCooldown } from "../../utils";
 import stringSimilarity from "string-similarity";
 
-const villagers: string[] = [];
+let villagers: string[] = [];
 
 export default {
     name: "villager",
@@ -22,7 +22,6 @@ export default {
             query = query.replace(/ +g/, "_");
         }
 
-        setCooldown(client, this, channel, userstate);
         const data = await fetchVillagerName(query);
         if (!data.length) {
             const matches = stringSimilarity.findBestMatch(query, await fetchAllVillagerNames());
@@ -41,6 +40,7 @@ export default {
             );
         }
 
+        setCooldown(client, this, channel, userstate);
         const { name, personality, species, phrase, url } = data[0];
         return client.say(
             channel,
@@ -60,9 +60,8 @@ const fetchAllVillagerNames = async () => {
         }
     });
     const data = await resp.json();
-    for (let i = 0; i < data.length; i++) {
-        villagers.push(data[i].name);
-    }
+    villagers = data.map((villager: Villagers) => villager.name);
+
     return villagers;
 };
 

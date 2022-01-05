@@ -173,10 +173,10 @@ export const getChannelInfo = async (client: Client, channel: string) => {
 };
 
 export const getUserInfo = async (client: Client, userID: string) => {
-    let userInfo = client.userInfoCache.get(userID);
+    let userInfo = client.userInfoCache.get(userID.toLowerCase());
     if (!userInfo) {
         userInfo = await client.DBUser.findByIdAndUpdate(
-            userID,
+            userID.toLowerCase(),
             {},
             { new: true, upsert: true, setDefaultsOnInsert: true }
         );

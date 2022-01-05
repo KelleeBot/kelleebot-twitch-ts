@@ -26,9 +26,7 @@ export default {
     async execute({ client, channel, args, userstate }) {
         const user = args[1].startsWith("@") ? args[1].replace("@", "") : args[1];
         try {
-            const blacklist = (await getUserID(user)) as any;
-            const { id, login } = blacklist.data[0];
-            let userInfo = await getUserInfo(client, id);
+            let userInfo = await getUserInfo(client, user);
 
             switch (args[0].toLowerCase()) {
                 case "add":
@@ -39,29 +37,29 @@ export default {
                     if (userInfo.isBlacklisted) {
                         return client.say(
                             channel,
-                            `/me Looks like ${login} is already blacklisted.`
+                            `/me Looks like ${user} is already blacklisted.`
                         );
                     }
 
                     userInfo.isBlacklisted = true;
                     await client.DBUser.findByIdAndUpdate(
-                        id,
+                        user.toLowerCase(),
                         { $set: { isBlacklisted: true } },
                         { new: true, upsert: true, setDefaultsOnInsert: true }
                     );
-                    return client.say(channel, `/me You have successfully blacklisted ${login}.`);
+                    return client.say(channel, `/me You have successfully blacklisted ${user}.`);
                 case "remove":
                     if (!userInfo.isBlacklisted) {
-                        return client.say(channel, `/me ${login} is currently not blacklisted.`);
+                        return client.say(channel, `/me ${user} is currently not blacklisted.`);
                     }
 
                     userInfo.isBlacklisted = false;
                     await client.DBUser.findByIdAndUpdate(
-                        id,
+                        user.toLowerCase(),
                         { $set: { isBlacklisted: false } },
                         { new: true, upsert: true, setDefaultsOnInsert: true }
                     );
-                    return client.say(channel, `/me You have succesfully whitelisted ${login}.`);
+                    return client.say(channel, `/me You have succesfully whitelisted ${user}.`);
             }
         } catch (e) {
             log("ERROR", `${__filename}`, `An error has occurred: ${e}`);
@@ -69,22 +67,3 @@ export default {
         }
     }
 } as Command;
-
-const getUserID = (user: string) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const body = await fetch(
-                `https://api.twitch.tv/helix/users?login=${encodeURIComponent(user)}`,
-                { headers }
-            );
-            const result = await body.json();
-            if (result) {
-                resolve(result);
-            } else {
-                reject("There was a problem retrieving user info.");
-            }
-        } catch (e) {
-            log("ERROR", `${__filename}`, `An error has occurred: ${e}`);
-        }
-    });
-};

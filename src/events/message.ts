@@ -28,7 +28,7 @@ export default async (
         if (self || userstate.bot) return;
 
         let channelInfo = await getChannelInfo(client, channel);
-        const userInfo = await getUserInfo(client, userstate["user-id"]!);
+        const userInfo = await getUserInfo(client, userstate.username);
 
         if (userInfo.isBlacklisted) return;
 

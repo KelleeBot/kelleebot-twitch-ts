@@ -17,7 +17,7 @@ export default {
         }
     ],
     async execute({ client, channel, userstate, args }) {
-        let query = args.join(" ");
+        let query = args.join(" ").toLowerCase().trim();
         if (query.includes(" ")) {
             query = query.replace(/ +g/, "_");
         }
@@ -36,7 +36,10 @@ export default {
             const { bestMatch } = matches;
             return client.say(
                 channel,
-                `/me I could not find a villager with that name. Maybe you meant ${bestMatch.target}?`
+                `/me I could not find a villager with that name. Maybe you meant ${bestMatch.target.replace(
+                    /\b(\w)/g,
+                    (char) => char.toUpperCase()
+                )}?`
             );
         }
 
@@ -60,7 +63,7 @@ const fetchAllVillagerNames = async () => {
         }
     });
     const data = await resp.json();
-    villagers = data.map((villager: Villagers) => villager.name);
+    villagers = data.map((villager: Villagers) => villager.name.toLowerCase());
 
     return villagers;
 };

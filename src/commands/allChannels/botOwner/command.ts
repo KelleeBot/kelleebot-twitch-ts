@@ -21,7 +21,7 @@ export default {
     async execute({ client, channel, args }) {
         const channelName = channel.slice(1);
         let channelInfo = await getChannelInfo(client, channel);
-        const disabledCommands = channelInfo.disabledCommands;
+        const disabledCommands = channelInfo!.disabledCommands;
 
         const command = client.commands.get(args[1].toLowerCase());
         if (!command) {
@@ -59,8 +59,8 @@ export default {
                     { upsert: true, new: true }
                 );
 
-                channelInfo.disabledCommands.push(command.name);
-                client.channelInfoCache.set(channelName, channelInfo);
+                channelInfo!.disabledCommands.push(command.name);
+                client.channelInfoCache.set(channelName, channelInfo!);
                 client.say(channel, `/me The command "${command.name}" has been disabled.`);
                 break;
             case "enable":
@@ -76,7 +76,7 @@ export default {
                     { $pull: { disabledCommands: command.name } },
                     { upsert: true, new: true }
                 );
-                client.channelInfoCache.set(channelName, channelInfo);
+                client.channelInfoCache.set(channelName, channelInfo!);
                 client.say(channel, `/me The command "${command.name}" has been enabled.`);
                 break;
         }

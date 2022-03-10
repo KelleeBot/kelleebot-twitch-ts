@@ -30,7 +30,7 @@ export default async (
         let channelInfo = await getChannelInfo(client, channel);
         const userInfo = await getUserInfo(client, userstate.username);
 
-        if (userInfo.isBlacklisted) return;
+        if (userInfo!.isBlacklisted) return;
 
         // if (message.toLowerCase() === `@${process.env.BOT_USERNAME}`) {
         //   return client.say(
@@ -39,14 +39,14 @@ export default async (
         //   );
         // }
 
-        if (channelInfo._id === "ramenbomber_") {
-            if (!message.startsWith(channelInfo.prefix) && message.toLowerCase().includes("uwu")) {
+        if (channelInfo!._id === "ramenbomber_") {
+            if (!message.startsWith(channelInfo!.prefix) && message.toLowerCase().includes("uwu")) {
                 return client.say(channel, "PrideUwu PrideUwu");
             }
         }
 
         const prefixRegex = new RegExp(
-            `^(@${process.env.BOT_USERNAME}|${escapeRegex(channelInfo.prefix)})`
+            `^(@${process.env.BOT_USERNAME}|${escapeRegex(channelInfo!.prefix)})`
         );
 
         if (!prefixRegex.test(message)) return;
@@ -58,8 +58,8 @@ export default async (
 
         const command =
             client.commands.get(cmdName) ||
-            (channelInfo.commandAlias
-                ? client.commands.get(channelInfo.commandAlias[cmdName])
+            (channelInfo!.commandAlias
+                ? client.commands.get(channelInfo!.commandAlias[cmdName])
                 : false);
         if (!command) return;
 
@@ -73,7 +73,7 @@ export default async (
 
         if (command.devOnly && !devs.includes(userstate.username)) return;
 
-        if (channelInfo.disabledCommands.includes(command.name)) return;
+        if (channelInfo!.disabledCommands.includes(command.name)) return;
 
         if (command.channels === "all" || typeof command.channels === "undefined") {
             command.channels = await getAllChannels();

@@ -24,7 +24,7 @@ export default {
             );
         }
 
-        if (channelInfo.prefix.toLowerCase() === args[0].toLowerCase()) {
+        if (channelInfo!.prefix.toLowerCase() === args[0].toLowerCase()) {
             return client.say(
                 channel,
                 `/me My prefix is already "${args[0]}". Please try a new one.`
@@ -42,11 +42,11 @@ export default {
             }
         );
 
-        channelInfo.prefix = args[0].toLowerCase();
-        client.channelInfoCache.set(channel.slice(1), channelInfo);
+        channelInfo!.prefix = args[0].toLowerCase();
+        client.channelInfoCache.set(channel.slice(1), channelInfo!);
         return client.say(
             channel,
-            `/me The new prefix has been successfully set to "${channelInfo.prefix}"`
+            `/me The new prefix has been successfully set to "${channelInfo!.prefix}"`
         );
     }
 } as Command;

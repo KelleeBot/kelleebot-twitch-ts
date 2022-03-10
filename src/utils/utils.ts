@@ -167,7 +167,7 @@ export const getChannelInfo = async (client: Client, channel: string) => {
             {},
             { new: true, upsert: true, setDefaultsOnInsert: true }
         );
-        client.channelInfoCache.set(channelName, channelInfo);
+        client.channelInfoCache.set(channelName, channelInfo!);
     }
     return channelInfo;
 };
@@ -180,7 +180,7 @@ export const getUserInfo = async (client: Client, userID: string) => {
             {},
             { new: true, upsert: true, setDefaultsOnInsert: true }
         );
-        client.userInfoCache.set(userID, userInfo);
+        client.userInfoCache.set(userID, userInfo!);
     }
     return userInfo;
 };
@@ -193,8 +193,8 @@ export const getUserInfo = async (client: Client, userID: string) => {
 export const getCooldown = async (client: Client, command: Command, channel: string) => {
     const channelInfo = await getChannelInfo(client, channel);
     let cd = command.cooldown;
-    if (channelInfo.commandCooldowns && channelInfo.commandCooldowns[command.name]) {
-        cd = channelInfo.commandCooldowns[command.name][channel.slice(1)] / 1000;
+    if (channelInfo!.commandCooldowns && channelInfo!.commandCooldowns[command.name]) {
+        cd = channelInfo!.commandCooldowns[command.name][channel.slice(1)] / 1000;
     }
     return cd;
 };

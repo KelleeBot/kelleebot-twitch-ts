@@ -24,7 +24,7 @@ export default {
                             .get(channel.slice(1))!
                             .disabledCommands.includes(key)
                     ) {
-                        commands.add(`${channelInfo.prefix}${value.name}`);
+                        commands.add(`${channelInfo!.prefix}${value.name}`);
                     }
                 }
             }

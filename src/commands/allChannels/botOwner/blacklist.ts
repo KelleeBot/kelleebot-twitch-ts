@@ -34,14 +34,14 @@ export default {
                         return client.say(channel, "/me You cannot blacklist yourself.");
                     }
 
-                    if (userInfo.isBlacklisted) {
+                    if (userInfo!.isBlacklisted) {
                         return client.say(
                             channel,
                             `/me Looks like ${user} is already blacklisted.`
                         );
                     }
 
-                    userInfo.isBlacklisted = true;
+                    userInfo!.isBlacklisted = true;
                     await client.DBUser.findByIdAndUpdate(
                         user.toLowerCase(),
                         { $set: { isBlacklisted: true } },
@@ -49,11 +49,11 @@ export default {
                     );
                     return client.say(channel, `/me You have successfully blacklisted ${user}.`);
                 case "remove":
-                    if (!userInfo.isBlacklisted) {
+                    if (!userInfo!.isBlacklisted) {
                         return client.say(channel, `/me ${user} is currently not blacklisted.`);
                     }
 
-                    userInfo.isBlacklisted = false;
+                    userInfo!.isBlacklisted = false;
                     await client.DBUser.findByIdAndUpdate(
                         user.toLowerCase(),
                         { $set: { isBlacklisted: false } },

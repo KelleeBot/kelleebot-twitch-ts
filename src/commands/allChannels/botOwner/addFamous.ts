@@ -1,4 +1,5 @@
 import { Command } from "../../../interfaces";
+import { getAllFamousLinks } from "../../../utils";
 
 export default {
     name: "addfamous",
@@ -14,6 +15,11 @@ export default {
     ],
     async execute({ client, channel, args }) {
         const text = args.join(" ");
+        const famousLinks = await getAllFamousLinks(client);
+
+        if (famousLinks.includes(text.toLowerCase()))
+            return client.say(channel, `/me Looks like that's already in the database.`);
+
         await client.DBFamousLinks.findByIdAndUpdate(
             "famousLinks",
             { $push: { famous: text.toLowerCase() } },

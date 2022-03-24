@@ -32,8 +32,8 @@ export default {
         }
 
         try {
-            const game = (await getCurrentGame(userToSO)) as string;
-            if (!game || typeof game === "undefined") {
+            const game = (await getCurrentGame(userToSO).catch(e => log("ERROR", `${__filename}`, `An error has occurred: ${e}`))) as string;
+            if (!game || !game.length || typeof game === "undefined") {
                 return client.say(
                     channel,
                     `/me ${userToSO} doesn't stream :( but you should go give them a follow anyways! https://www.twitch.tv/${userToSO}`
@@ -42,7 +42,7 @@ export default {
 
             if (
                 game.toLowerCase().includes("no user") ||
-                game.toLowerCase() === "404 page not found"
+                game.toLowerCase().includes("not found")
             ) {
                 return client.say(channel, `/me I couldn't find that user kellee1Cry`);
             }

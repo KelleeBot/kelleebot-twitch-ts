@@ -1,6 +1,5 @@
 import { Command } from "../../../interfaces";
 import { log, getUserInfo, errorMessage } from "../../../utils";
-import fetch from "node-fetch";
 
 const headers = {
     "client-id": process.env.TWITCH_CLIENT_ID,

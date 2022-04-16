@@ -21,15 +21,15 @@ export default {
             const channelName = channel.slice(1);
             const deaths = args[0];
 
-            if (isNaN(parseInt(deaths)) || Number.isInteger(deaths)) return client.say(channel, `/me Please specify a valid number.`);
+            if (isNaN(+deaths) || Number.isInteger(deaths)) return client.say(channel, `/me Please specify a valid number.`);
 
             let channelInfo = await getChannelInfo(client, channel);
-            const game = await getCurrentGame(channelName);
+            const game = await getCurrentGame(channelName).catch((e) => log("ERROR", `${__filename}`, `An error has occurred: ${e}`)) as String;
             if (!game) return client.say(channel, `/me There is no game category set for this channel.`);
 
             channelInfo = await client.DBChannel.findByIdAndUpdate(
                 { _id: channelName },
-                { $set: { [`deathCounter.${game}.deaths`]: parseInt(deaths) } },
+                { $set: { [`deathCounter.${game}`]: +deaths } },
                 { upsert: true, new: true }
             );
 

@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import axios from "axios";
 import { Command, Villagers } from "../../interfaces";
 import { setCooldown } from "../../utils";
 import stringSimilarity from "string-similarity";
@@ -55,31 +55,28 @@ export default {
 const fetchAllVillagerNames = async () => {
     if (villagers.length) return villagers;
 
-    const resp = await fetch("https://api.nookipedia.com/villagers", {
-        method: "GET",
+    const resp = await axios.get("https://api.nookipedia.com/villagers", {
         headers: {
             "X-API-KEY": `${process.env.NOOK_API_KEY}`,
             "Accept-Version": "2.0.0"
         }
     });
-    const data = await resp.json();
-    villagers = data.map((villager: Villagers) => villager.name.toLowerCase());
+    villagers = resp.data.map((villager: Villagers) => villager.name.toLowerCase());
 
     return villagers;
 };
 
 const fetchVillagerName = async (name: string) => {
-    const resp = await fetch(
+    const resp = await axios.get(
         `https://api.nookipedia.com/villagers?name=${encodeURIComponent(
             name.toLowerCase()
         )}&nhdetails=true`,
         {
-            method: "GET",
             headers: {
                 "X-API-KEY": `${process.env.NOOK_API_KEY}`,
                 "Accept-Version": "2.0.0"
             }
         }
     );
-    return await resp.json();
+    return resp.data;
 };

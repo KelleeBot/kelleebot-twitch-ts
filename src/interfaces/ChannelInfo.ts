@@ -19,4 +19,6 @@ export interface ChannelInfo {
 
     /** Contains all custom command aliases */
     commandAlias?: { [alias: string]: string };
+
+    deathCounter?: { [game: string]: { deaths: number } };
 }

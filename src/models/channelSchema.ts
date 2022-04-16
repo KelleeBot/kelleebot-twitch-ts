@@ -10,7 +10,8 @@ const channelSchema = new Schema({
     commands: Array,
     commandPerms: {},
     commandCooldowns: {},
-    commandAlias: {}
+    commandAlias: {},
+    deathCounter: {}
 });
 
 export default model("twitch-channels-schema", channelSchema, "twitch-channels-schema");

@@ -1,7 +1,7 @@
 import { Command } from "../../../interfaces";
 import pokemonSchema from "../../../models/pokemonSchema";
 import { log } from "../../../utils";
-import fetch from "node-fetch";
+import axios from "axios";
 
 const pokeBalls = [
     "Master Ball",
@@ -19,6 +19,7 @@ export default {
     category: "Moderation/jkirstyn",
     channels: ["#jkirstyn"],
     cooldown: 15,
+    globalCooldown: true,
     isModOnly: true,
     arguments: [
         {
@@ -69,11 +70,10 @@ export default {
 const getRandomPokemon = async (pokedexNum: number) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const body = await fetch(
+            const resp = await axios.get(
                 `https://pokeapi.co/api/v2/pokemon/${encodeURIComponent(pokedexNum)}`
             );
-            const result = await body.json();
-            const pokemon = capFirstLetter(result.species.name);
+            const pokemon = capFirstLetter(resp.data.name);
             resolve(pokemon);
         } catch (e) {
             log("ERROR", `${__filename}`, `An error has occurred: ${e}`);

@@ -3,11 +3,12 @@ import { log, errorMessage, getChannelInfo, getCurrentGame } from "../../../util
 
 export default {
     name: "d+",
+    aliases: ["death"],
     category: "Mod",
-    channels: ["#iaraaron", "#ramenbomber_", "#redrawnegames"],
+    channels: ["#ramenbomber_", "#redrawnegames"],
     isModOnly: true,
-    globalCooldown: true,
-    cooldown: 15,
+    //globalCooldown: true,
+    //cooldown: 15,
     async execute({ client, channel }) {
         try {
             const channelName = channel.slice(1);

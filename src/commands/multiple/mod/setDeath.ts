@@ -4,10 +4,10 @@ import { log, errorMessage, getChannelInfo, getCurrentGame } from "../../../util
 export default {
     name: "setdeath",
     category: "Mod",
-    channels: ["#iaraaron", "#ramenbomber_", "#redrawnegames"],
+    channels: ["#ramenbomber_", "#redrawnegames"],
     isModOnly: true,
-    globalCooldown: true,
-    cooldown: 15,
+    // globalCooldown: true,
+    // cooldown: 15,
     arguments: [
         {
             type: "NUMBER",

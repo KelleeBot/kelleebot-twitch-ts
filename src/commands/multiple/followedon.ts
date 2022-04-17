@@ -1,6 +1,6 @@
 import { Command } from "../../interfaces";
 import { log, replaceChars, errorMessage, setCooldown } from "../../utils";
-import fetch from "node-fetch";
+import axios from "axios";
 
 export default {
     name: "followedon",
@@ -9,27 +9,29 @@ export default {
     channels: ["#jkirstyn", "#ramenbomber_", "#mackthevoid"],
     async execute({ client, channel, userstate }) {
         setCooldown(client, this, channel, userstate);
-        const resp = await fetch(
-            `https://beta.decapi.me/twitch/followed/${channel.slice(1)}/${
-                userstate.username
-            }?tz=America/New_York&format=${encodeURIComponent("d/m/Y g:i:s A T")}`
-        ).catch((e: Error) => log("ERROR", `${__filename}`, `An error has occurred: ${e}`));
+        try {
+            const resp = await axios.get(
+                `https://beta.decapi.me/twitch/followed/${channel.slice(1)}/${
+                    userstate.username
+                }?tz=America/New_York&format=${encodeURIComponent("d/m/Y g:i:s A T")}`
+            );
+            const { data } = resp;
 
-        const data = await resp.text();
+            if (!data) return errorMessage(client, channel);
 
-        if (!data) return errorMessage(client, channel);
+            if (replaceChars(data) === "a user cannot follow themself")
+                return client.say(channel, `/me ${data}`);
 
-        if (replaceChars(data) === "a user cannot follow themself") {
-            return client.say(channel, `/me ${data}`);
+            if (replaceChars(data).includes("does not follow"))
+                return client.say(channel, `/me ${data}.`);
+
+            return client.say(
+                channel,
+                `/me ${userstate["display-name"]} followed ${channel.slice(1)} on ${data}.`
+            );
+        } catch (e) {
+            log("ERROR", `${__filename}`, `An error has occurred: ${e}`);
+            return errorMessage(client, channel);
         }
-
-        if (replaceChars(data).includes("does not follow")) {
-            return client.say(channel, `/me ${data}.`);
-        }
-
-        return client.say(
-            channel,
-            `/me ${userstate["display-name"]} followed ${channel.slice(1)} on ${data}.`
-        );
     }
 } as Command;

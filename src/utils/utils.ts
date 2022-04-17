@@ -4,7 +4,7 @@ import { Command } from "../interfaces/Command";
 import { Arguments } from "../types/Arguments";
 import { Flags } from "../types/Flags";
 import channelSchema from "../models/channelSchema";
-import fetch from "node-fetch";
+import axios from "axios";
 import utc from "dayjs/plugin/utc";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
@@ -349,13 +349,9 @@ export const isModOrVIP = async (client: Client, channel: string) => {
 export const getCurrentGame = (channel: string) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const body = await fetch(`https://beta.decapi.me/twitch/game/${channel}`);
-            const result = await body.text();
-            if (result) {
-                resolve(result);
-            } else {
-                reject("There was a problem retrieving game data.");
-            }
+            const resp = await axios.get(`https://beta.decapi.me/twitch/game/${channel}`);
+            if (resp) resolve(resp.data);
+            else reject("There was a problem retrieving game data.");
         } catch (e) {
             log("ERROR", `${__filename}`, `An error has occurred : ${e}`);
         }

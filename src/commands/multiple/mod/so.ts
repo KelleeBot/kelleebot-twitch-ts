@@ -32,7 +32,9 @@ export default {
         }
 
         try {
-            const game = (await getCurrentGame(userToSO).catch(e => log("ERROR", `${__filename}`, `An error has occurred: ${e}`))) as string;
+            const game = (await getCurrentGame(userToSO).catch((e) =>
+                log("ERROR", `${__filename}`, `An error has occurred: ${e}`)
+            )) as string;
             if (!game || !game.length || typeof game === "undefined") {
                 return client.say(
                     channel,

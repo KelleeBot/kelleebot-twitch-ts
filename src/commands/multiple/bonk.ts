@@ -48,7 +48,8 @@ export default {
                 channel,
                 `/me ${userstate["display-name"]} bonks ${userToBonk} with ${bonk}`
             );
-        } else { //if (channel.toLowerCase() === "krisypaulinee") {
+        } else {
+            //if (channel.toLowerCase() === "krisypaulinee") {
             const krisyBonks = ["a hammer", "a shovel", "a pokeball", "love"];
             const extra = ["super effective", "a critical hit", "missed"];
 

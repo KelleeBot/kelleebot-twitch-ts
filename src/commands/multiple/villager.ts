@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Command, Villagers } from "../../interfaces";
+import { Command } from "../../interfaces";
 import { setCooldown } from "../../utils";
 import stringSimilarity from "string-similarity";
 
@@ -24,7 +24,7 @@ export default {
 
         const data = await fetchVillagerName(query);
         if (!data.length) {
-            const matches = stringSimilarity.findBestMatch(query, await fetchAllVillagerNames());
+            const matches = stringSimilarity.findBestMatch(query, client.villagers);
             const options = matches.ratings
                 .filter((v) => v.rating >= 0.3)
                 .sort((a, b) => b.rating - a.rating)
@@ -51,20 +51,6 @@ export default {
         );
     }
 } as Command;
-
-const fetchAllVillagerNames = async () => {
-    if (villagers.length) return villagers;
-
-    const resp = await axios.get("https://api.nookipedia.com/villagers", {
-        headers: {
-            "X-API-KEY": `${process.env.NOOK_API_KEY}`,
-            "Accept-Version": "2.0.0"
-        }
-    });
-    villagers = resp.data.map((villager: Villagers) => villager.name.toLowerCase());
-
-    return villagers;
-};
 
 const fetchVillagerName = async (name: string) => {
     const resp = await axios.get(

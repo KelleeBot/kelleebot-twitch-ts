@@ -46,6 +46,8 @@ dotenv.config();
 
         await registerEvents(client, "../events");
         await registerCommands(client, "../commands");
+
+        await client.loadAllVillagerNames();
     } catch (e) {
         log("ERROR", `${__filename}`, `An error has occurred: ${e}.`);
     }

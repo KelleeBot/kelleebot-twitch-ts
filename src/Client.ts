@@ -1,6 +1,7 @@
 import TMI, { Options } from "tmi.js";
 import { ChannelInfo, Command, UserInfo } from "./interfaces";
 import { Model } from "mongoose";
+import axios from "axios";
 
 interface Client {
     commands: Map<string, Command>;
@@ -15,6 +16,7 @@ interface Client {
     DBFamousLinks: Model<object>;
     channelCooldowns: Map<string, Map<string, Map<string, number>>>;
     globalCooldowns: Map<string, Map<string, number>>;
+    villagers: Array<string>;
 }
 
 class Client extends TMI.Client {
@@ -29,6 +31,7 @@ class Client extends TMI.Client {
         this.importSchemas();
         this.channelCooldowns = new Map();
         this.globalCooldowns = new Map();
+        this.villagers = new Array();
     }
 
     async importSchemas() {
@@ -37,5 +40,19 @@ class Client extends TMI.Client {
         this.DBBlacklist = (await import("./models/blacklistSchema")).default;
         this.DBFamousLinks = (await import("./models/famousSchema")).default;
     }
+
+    async loadAllVillagerNames() {
+        this.villagers = await fetchAllVillagerNames();
+    }
 }
 export { Client };
+
+const fetchAllVillagerNames = async () => {
+    const resp = await axios.get("https://api.nookipedia.com/villagers", {
+        headers: {
+            "X-API-KEY": `${process.env.NOOK_API_KEY}`,
+            "Accept-Version": "2.0.0"
+        }
+    });
+    return resp.data.map((ac: { name: string }) => ac.name);
+};

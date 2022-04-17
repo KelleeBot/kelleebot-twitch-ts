@@ -25,7 +25,7 @@ export default {
             );
         }
 
-        if (channel.toLowerCase() === "ramenbomber_") {
+        if (channel.slice(1).toLowerCase() === "ramenbomber_") {
             const ramenBonks = [
                 "a shovel.",
                 "a hammer.",

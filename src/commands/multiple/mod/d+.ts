@@ -5,7 +5,7 @@ export default {
     name: "d+",
     aliases: ["death"],
     category: "Mod",
-    channels: ["#ramenbomber_", "#redrawnegames"],
+    channels: ["#ramenbomber_", "#redrawnegames", "#krisypaulinee"],
     isModOnly: true,
     //globalCooldown: true,
     //cooldown: 15,
@@ -29,8 +29,7 @@ export default {
             const deathCounter = channelInfo?.deathCounter?.[`${game}`];
             return client.say(
                 channel,
-                `/me Oh no, not another death in "${game}" BibleThump. They have now died a total of ${deathCounter} time${
-                    deathCounter !== 1 ? "s" : ""
+                `/me Oh no, not another death in "${game}" BibleThump. They have now died a total of ${deathCounter} time${deathCounter !== 1 ? "s" : ""
                 }.`
             );
         } catch (e) {

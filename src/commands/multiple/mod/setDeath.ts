@@ -4,7 +4,7 @@ import { log, errorMessage, getChannelInfo, getCurrentGame } from "../../../util
 export default {
     name: "setdeath",
     category: "Mod",
-    channels: ["#ramenbomber_", "#redrawnegames"],
+    channels: ["#ramenbomber_", "#redrawnegames", "#krisypaulinee"],
     isModOnly: true,
     // globalCooldown: true,
     // cooldown: 15,
